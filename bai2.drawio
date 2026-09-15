@@ -1,0 +1,93 @@
+<mxfile host="app.diagrams.net" modified="2026-09-15T00:00:00.000Z" agent="Claude" version="24.0.0" type="device">
+  <diagram name="Sequence - Thanh Toan (Da Sua Loi)" id="seqThanhToan">
+    <mxGraphModel dx="1000" dy="700" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1040" pageHeight="560" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- Actor: Khach hang -->
+        <mxCell id="actorKH" value="Khách hàng" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="30" y="20" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="lifelineKH" style="endArrow=none;dashed=1;html=1;strokeColor=#000000;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="45" y="80" as="sourcePoint" />
+            <mxPoint x="45" y="520" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Object: Cong Thanh Toan -->
+        <mxCell id="lifelineCTT" value="Cổng Thanh Toán" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;collapsible=0;recursiveResize=0;outlineConnect=0;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="260" y="20" width="160" height="500" as="geometry" />
+        </mxCell>
+
+        <!-- Object: Ngan Hang Loi -->
+        <mxCell id="lifelineNHL" value="Ngân Hàng Lõi" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;collapsible=0;recursiveResize=0;outlineConnect=0;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="560" y="20" width="160" height="500" as="geometry" />
+        </mxCell>
+
+        <!-- Object: EmailServer -->
+        <mxCell id="lifelineES" value="EmailServer" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;collapsible=0;recursiveResize=0;outlineConnect=0;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="860" y="20" width="160" height="500" as="geometry" />
+        </mxCell>
+
+        <!-- Msg 1: sync KH -> CTT -->
+        <mxCell id="msg1" value="1: nhapTheTinDung(soThe, ngayHetHan, cvv)" style="html=1;endArrow=block;endFill=1;rounded=0;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="45" y="120" as="sourcePoint" />
+            <mxPoint x="340" y="120" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Msg 2: SELF message on CTT (fixed: was wrongly Async to a new lifeline) -->
+        <mxCell id="msg2" value="2: kiemTraDinhDangThe()  [SỬA: Self, không phải Async sang lifeline khác]" style="html=1;endArrow=block;endFill=1;rounded=1;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="340" y="160" as="sourcePoint" />
+            <mxPoint x="340" y="200" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="400" y="160" />
+              <mxPoint x="400" y="200" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Msg 3: sync CTT -> NHL -->
+        <mxCell id="msg3" value="3: processPayment()" style="html=1;endArrow=block;endFill=1;rounded=0;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="340" y="250" as="sourcePoint" />
+            <mxPoint x="640" y="250" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Msg 4: return NHL -> CTT -->
+        <mxCell id="msg4" value="4: Return - ketQuaGiaoDich()" style="html=1;endArrow=open;endFill=0;dashed=1;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="640" y="290" as="sourcePoint" />
+            <mxPoint x="340" y="290" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Msg 5: return CTT -> KH -->
+        <mxCell id="msg5" value="5: Return - hienThiThanhCong()" style="html=1;endArrow=open;endFill=0;dashed=1;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="340" y="330" as="sourcePoint" />
+            <mxPoint x="45" y="330" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Msg 6: ASYNC CTT -> EmailServer (fixed: was wrongly Sync with immediate Return) -->
+        <mxCell id="msg6" value="6: sendReceiptEmail()  [SỬA: Async, không chờ phản hồi]" style="html=1;endArrow=open;endFill=0;dashed=0;fontSize=11;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="340" y="380" as="sourcePoint" />
+            <mxPoint x="940" y="380" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="note1" value="Ghi chú: không có mũi tên Return đi kèm bước 6 vì Async là gửi-và-đi-tiếp." style="text;html=1;align=left;verticalAlign=middle;fontStyle=2;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="340" y="400" width="500" height="20" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
